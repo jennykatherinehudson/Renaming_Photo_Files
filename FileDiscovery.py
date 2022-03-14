@@ -1,6 +1,7 @@
 import glob
 import os
 
+
 class FileDiscovery:
 
     def __init__(self, dir):
@@ -8,12 +9,14 @@ class FileDiscovery:
         self.__extention_working()
 
     def __extention_working(self):
-        #for number_files_in_dir
-        self.__all_files_in_dir = os.listdir(self.dir)
-        #for all_extentions_in_dir
+        # for number_files_in_dir
+        self.all_files_in_dir = os.listdir(self.dir)
+        self.path_to_all_files = [os.path.join(
+            self.dir, i) for i in self.all_files_in_dir]
+        # for all_extentions_in_dir
         self.__splitted_files_list = set(
-            [i.split('.')[1] for i in self.__all_files_in_dir])
-        #for unique_extention
+            [i.split('.')[1] for i in self.all_files_in_dir])
+        # for unique_extention
         extention_name = ['*.' + str(i) for i in self.__splitted_files_list]
         unique_extention_list = [
             len(glob.glob(os.path.join(self.dir, i))) for i in extention_name]
@@ -21,7 +24,7 @@ class FileDiscovery:
             extention_name, unique_extention_list)}
 
     def number_files_in_dir(self):
-        return len(self.__all_files_in_dir)
+        return len(self.all_files_in_dir)
 
     def all_extentions_in_dir(self):
         return self.__splitted_files_list
@@ -35,4 +38,6 @@ class FileDiscovery:
 photo_files_test = FileDiscovery(path)
 print(photo_files_test.number_files_in_dir())
 print(photo_files_test.all_extentions_in_dir())
-print(photo_files_test.unique_extention()) """
+print(photo_files_test.unique_extention())
+print(photo_files_test.all_files_in_dir)
+print(photo_files_test.path_to_all_files) """
