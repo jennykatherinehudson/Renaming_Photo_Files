@@ -2,41 +2,27 @@ from datetime import datetime
 import os
 from FileDiscovery import FileDiscovery
 
-""" image_file = r'E:\Python\python_my_projekt1_renaming_photos\Library\2017_dress_002.jpg'
 
-time_creation = datetime.fromtimestamp(os.path.getctime(image_file))
-time_modification = datetime.fromtimestamp(os.path.getmtime(image_file))
+class FileMetadateRading:
 
-print(time_creation.date())
-print(time_modification.time())
+    def __init__(self, FiltratedListOfPhotos):
+        self.list_of_photos = FiltratedListOfPhotos
 
-print('Creation date: {}'.format(time_creation))
-print('Modification date: {}'.format(time_modification)) """
-
-""" class FileMetadateRading: 
-
-    def __init__(self, dir, images_list):
-        self.dir = dir
-        self.images_list = images_list
-        self.__time_working()
-
-    def __time_working(self):
-        self.time_creation_in_dir = []
-        for image in self.dir: 
-            self.time_creation_in_dir.append(datetime.fromtimestamp(os.path.getctime(image)))
-    
-    def time_creation(self):
-        return self.time_creation_in_dir """
+    def read_modification_date_time(self):
+        time_md = [datetime.fromtimestamp(os.path.getmtime(i))
+                   for i in self.list_of_photos]
+        self.time_md_date_and_time = [
+            str(i.date()) + '-' + str(i.time()) for i in time_md]
+        return self.time_md_date_and_time
 
 
-path = r'E:\Python\python_my_projekt1_renaming_photos\Library'
-photo_files = FileDiscovery(path)
-#photo_metadata = FileMetadateRading(path, photo_files.path_to_all_files)
-# print(photo_metadata.time_creation())
+class GenerateFullName:
 
+    def __init__(self, date_and_time_for_files, main_name):
+        self.date_and_time_for_files = date_and_time_for_files
+        self.main_name = main_name
 
-time_md = [datetime.fromtimestamp(os.path.getmtime(i))
-           for i in photo_files.path_to_all_files]
-time_md_date_and_time = [str(i.date()) + '-' + str(i.time()) for i in time_md]
-print(time_md_date_and_time)
-# print(time_modification)
+    def generate_full_name(self):
+        full_names = [self.main_name + '_' + i for i in self.date_and_time_for_files]
+        return full_names
+
