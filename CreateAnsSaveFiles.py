@@ -23,12 +23,12 @@ class CreateAndSaveFiles:
 
     def save_copy_photos(self):
         old_full_names = [i.split(self.path + '\\')[1] for i in self.ext_dir_of_photos]
-        src = self.ext_dir_of_photos
-        dst = [os.path.join(self.new_folder_dir, i) for i in old_full_names]
-        for i, j in zip(src, dst):
+        self.src = self.ext_dir_of_photos
+        self.dst = [os.path.join(self.new_folder_dir, i) for i in old_full_names]
+        for i, j in zip(self.src, self.dst):
             shutil.copy(i,j)
         dst_new_name = [os.path.join(self.new_folder_dir, i) for i in self.new_full_names]
-        for i,j in zip(dst, dst_new_name):
+        for i,j in zip(self.dst, dst_new_name):
             os.rename(i,j)
         print('Congratulations!!! You have coppied {} files.'.format(len(dst_new_name)))
-        print('-'*70) 
+        print('-'*70)
