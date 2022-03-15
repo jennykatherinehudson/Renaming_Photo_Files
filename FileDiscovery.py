@@ -22,7 +22,7 @@ class FileDiscovery:
             len(glob.glob(os.path.join(self.dir, i))) for i in extention_name]
         self.__unique_extention_dict = {i: j for i, j in zip(
             extention_name, unique_extention_list)}
-
+        
     def number_files_in_dir(self):
         return len(self.all_files_in_dir)
 

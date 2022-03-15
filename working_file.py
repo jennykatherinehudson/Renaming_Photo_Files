@@ -1,8 +1,11 @@
-import glob
 import os
+import glob
+import shutil
+from re import X
 from FileDiscovery import FileDiscovery
 from FileMetadataReading import FileMetadateRading
 from FileMetadataReading import GenerateFullName
+from CreateAnsSaveFiles import CreateAndSaveFiles
 
 
 def WhatDoYouHaveInYourFolder(path, photo_files):
@@ -44,9 +47,10 @@ WhatDoYouHaveInYourFolder(path, photo_files=FileDiscovery(path))
 extension_to_modify = WhatExtensionsToModify(photo_files=FileDiscovery(path))
 
 # Check if everything files was selected
-list_of_photos = photo_files.path_to_all_files.copy()
-number_of_selected_photos = len(
-    FiltratedListOfPhotos(extension_to_modify, list_of_photos))
+list_of_all_photos = photo_files.path_to_all_files.copy()
+ext_dir_of_photos = FiltratedListOfPhotos(
+    extension_to_modify, list_of_all_photos)
+number_of_selected_photos = len(ext_dir_of_photos)
 number_of_photos = photo_files.unique_extention()['*.' + extension_to_modify]
 if number_of_selected_photos == number_of_photos:
     print('Everything is ok!')
@@ -60,11 +64,17 @@ main_name = input('Please provide main name of the files: ')
 print('-'*70)
 
 # Generate full name of the files
-time = FileMetadateRading(FiltratedListOfPhotos(
-    extension_to_modify, list_of_photos))
+time = FileMetadateRading(ext_dir_of_photos)
 date_and_time_for_files = list(time.read_modification_date_time())
-full_names = GenerateFullName(date_and_time_for_files, main_name).generate_full_name()
-print(full_names)
+new_full_names = GenerateFullName(
+    date_and_time_for_files, main_name, extension_to_modify).generate_full_name()
 
-# Create a new folder
+
+# Create a new folder and save photos in new dir
+new_folder_path = input(r'Please provide a new path to the folder: ')
+cs_file = CreateAndSaveFiles(
+    new_folder_path, folder_name, new_full_names, ext_dir_of_photos, path)
+cs_file.create_new_folder()
+cs_file.save_copy_photos()
+
 
