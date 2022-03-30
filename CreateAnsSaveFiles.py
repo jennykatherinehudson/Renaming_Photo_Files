@@ -1,15 +1,11 @@
 import os
 import shutil
 
+class CreateNewFolder:
 
-class CreateAndSaveFiles:
-
-    def __init__(self, new_folder_path, folder_name, new_full_names, ext_dir_of_photos, path):
+    def __init__(self, new_folder_path, folder_name):
         self.new_folder_path = new_folder_path
         self.folder_name = folder_name
-        self.new_full_names = new_full_names
-        self.ext_dir_of_photos = ext_dir_of_photos
-        self.path = path
 
     def create_new_folder(self):
         self.new_folder_dir = os.path.join(
@@ -19,16 +15,26 @@ class CreateAndSaveFiles:
             print('New folder has been created.')
             print('-'*70)
         else:
-            print('File exists!')
+            print('Folder exists!')
 
-    def save_copy_photos(self):
-        old_full_names = [i.split(self.path + '\\')[1] for i in self.ext_dir_of_photos]
-        self.src = self.ext_dir_of_photos
-        self.dst = [os.path.join(self.new_folder_dir, i) for i in old_full_names]
-        for i, j in zip(self.src, self.dst):
-            shutil.copy(i,j)
-        dst_new_name = [os.path.join(self.new_folder_dir, i) for i in self.new_full_names]
-        for i,j in zip(self.dst, dst_new_name):
-            os.rename(i,j)
-        print('Congratulations!!! You have coppied {} files.'.format(len(dst_new_name)))
-        print('-'*70)
+class CopyFile(CreateNewFolder):
+
+    def __init__(self, new_folder_path, folder_name, old_photo_dir, path):
+        super().__init__(new_folder_path, folder_name)
+        self.old_photo_dir = old_photo_dir
+        self.path = path
+        self.destination_dir = os.path.join(self.new_folder_path, self.folder_name, self.old_photo_dir.split(self.path + '\\')[1])
+
+
+    def copy_file(self):
+        shutil.copy(self.old_photo_dir, self.destination_dir)
+
+class RenameFile(CopyFile):
+
+    def __init__(self, new_folder_path, folder_name, old_photo_dir, path, full_name):
+        super().__init__(new_folder_path, folder_name, old_photo_dir, path)
+        self.full_name = full_name
+
+    def rename_file(self):
+        self.destination_full_name_dir = os.path.join(self.new_folder_path, self.folder_name, self.full_name)
+        os.rename(self.destination_dir, self.destination_full_name_dir)

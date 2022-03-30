@@ -1,14 +1,13 @@
 import glob
 import os
 
-
 class FileDiscovery:
 
     def __init__(self, dir):
         self.dir = dir
-        self.__extention_working()
+        self.__load_unique_extensions()
 
-    def __extention_working(self):
+    def __load_unique_extensions(self):
         # for number_files_in_dir
         self.all_files_in_dir = os.listdir(self.dir)
         self.path_to_all_files = [os.path.join(
@@ -22,7 +21,7 @@ class FileDiscovery:
             len(glob.glob(os.path.join(self.dir, i))) for i in extention_name]
         self.__unique_extention_dict = {i: j for i, j in zip(
             extention_name, unique_extention_list)}
-        
+
     def number_files_in_dir(self):
         return len(self.all_files_in_dir)
 
@@ -32,12 +31,3 @@ class FileDiscovery:
     def unique_extention(self):
         return self.__unique_extention_dict
 
-
-""" path = r'E:\Python\python_my_projekt1_renaming_photos\Library'
-
-photo_files_test = FileDiscovery(path)
-print(photo_files_test.number_files_in_dir())
-print(photo_files_test.all_extentions_in_dir())
-print(photo_files_test.unique_extention())
-print(photo_files_test.all_files_in_dir)
-print(photo_files_test.path_to_all_files) """
