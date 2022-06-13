@@ -1,6 +1,7 @@
 import glob
 import os
 
+
 class FileDiscovery:
 
     def __init__(self, dir):
@@ -14,7 +15,7 @@ class FileDiscovery:
             self.dir, i) for i in self.all_files_in_dir]
         # for all_extentions_in_dir
         self.__splitted_files_list = set(
-            [i.split('.')[1] for i in self.all_files_in_dir])
+            [i.split('.')[-1] for i in self.all_files_in_dir])
         # for unique_extention
         extention_name = ['*.' + str(i) for i in self.__splitted_files_list]
         unique_extention_list = [
@@ -30,4 +31,3 @@ class FileDiscovery:
 
     def unique_extention(self):
         return self.__unique_extention_dict
-

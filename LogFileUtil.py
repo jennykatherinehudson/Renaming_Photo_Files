@@ -40,13 +40,11 @@ class ExtensionToModify(FolderContents):
             if extension not in list_of_all_photos[i]:
                 list_of_photos_copy.remove(list_of_all_photos[i])
         number_of_selected_photos = len(list_of_photos_copy)
-        number_of_photos = self.photo_files.unique_extention()['*.' + extension]
+        number_of_photos = self.photo_files.unique_extention()[
+            '*.' + extension]
         if number_of_selected_photos == number_of_photos:
             print('Everything is ok!')
             print('-'*70)
         else:
-            print('Something went wrong!') 
-        return list_of_photos_copy   
-        
-
-  
+            print('Something went wrong!')
+        return list_of_photos_copy

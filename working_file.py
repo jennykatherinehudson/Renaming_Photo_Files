@@ -2,9 +2,9 @@ from LogFileUtil import FolderContents
 from LogFileUtil import ExtensionToModify
 from FileDiscovery import FileDiscovery
 from FileMetadataReading import GenerateFullName
-from CreateAnsSaveFiles import CreateNewFolder
-from CreateAnsSaveFiles import CopyFile
-from CreateAnsSaveFiles import RenameFile
+from CreateAndSaveFiles import CreateNewFolder
+from CreateAndSaveFiles import CopyFile
+from CreateAndSaveFiles import RenameFile
 
 print("!!! Welcome in Hudson's Sollutions project !!!")
 print("With this project you can easily rename all of your files in provided directory. \nLet's start!")
@@ -37,9 +37,15 @@ print('Congratulations!!! You have coppied {} files.'.format(
 print('-'*70)
 
 # Generate full name of the files
-full_names = [
+i_for_exc = 1
+full_names = []
+for i in list_of_selected_photos_dir:
+    full_names.append(GenerateFullName(i, str(i_for_exc),
+                      main_name, extension_to_modify).generate_full_name())
+    i_for_exc += 1
+'''full_names = [
     GenerateFullName(i, main_name, extension_to_modify).generate_full_name()
-    for i in list_of_selected_photos_dir]
+    for i in list_of_selected_photos_dir]'''
 
 # Rename photos
 for old_photo_dir, full_name in zip(list_of_selected_photos_dir, full_names):
@@ -82,10 +88,14 @@ while True:
     print('-'*70)
 
     # Generate full name of the files
-    full_names = [
+    for i in list_of_selected_photos_dir:
+        full_names.append(GenerateFullName(i, str(i_for_exc),
+                          main_name, extension_to_modify).generate_full_name())
+        i_for_exc += 1
+    '''full_names = [
         GenerateFullName(
             i, main_name, extension_to_modify).generate_full_name()
-        for i in list_of_selected_photos_dir]
+        for i in list_of_selected_photos_dir]'''
 
     # Rename photos
     for old_photo_dir, full_name in zip(list_of_selected_photos_dir, full_names):
